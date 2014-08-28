@@ -149,6 +149,7 @@ make install
 /usr/local/bin/ruby-install ruby $RUBY_VERSION
 
 echo "chruby ruby-$RUBY_VERSION" >> /home/$THE_USER/.bash_profile
+echo "chruby ruby-$RUBY_VERSION" >> /home/buildbox/.bash_profile
 
 rm -rf chruby-* ruby-install-*
 
