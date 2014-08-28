@@ -35,6 +35,39 @@ apt-get -y upgrade
 readonly THE_USER=rubby
 useradd -m -s /bin/bash $THE_USER
 
+useradd -m -s /bin/bash buildbox
+
+cat >> /etc/sudoers <<EOF
+
+# Buildbox can do things as rubby
+buildbox ALL = (rubby) NOPASSWD: ALL
+
+EOF
+
+##############
+# buildbox
+##############
+
+apt-get install -y curl supervisor
+
+curl -sL https://raw.githubusercontent.com/buildboxhq/buildbox-agent/master/install.sh > /home/buildbox/install_buildbox.sh
+chmod +x /home/buildbox/install_buildbox.sh
+su - buildbox /home/buildbox/install_buildbox.sh
+
+cat > /etc/supervisor/conf.d/buildbox-agent.conf <<EOF
+[program:buildbox-agent]
+
+command=/home/buildbox/.buildbox/buildbox-agent start --access-token d726c4c0e895329cd666ef8cd1da80c5e01616a4e30873f7bb
+redirect_stderr=true
+user=buildbox
+environment=HOME="/home/buildbox",USER="buildbox"
+autostart=true
+autorestart=true
+EOF
+
+/etc/init.d/supervisor stop
+sleep 1
+/etc/init.d/supervisor start
 
 ##############
 # ruby
