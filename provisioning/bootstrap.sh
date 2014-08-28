@@ -116,6 +116,13 @@ ln -s /etc/nginx/sites-available/dashboard.conf /etc/nginx/sites-enabled/dashboa
 
 
 ##############
+# mysql
+##############
+
+apt-get install -y mysql-server mysql-client
+
+
+##############
 # dashboard
 ##############
 
@@ -171,6 +178,7 @@ git clone git@bitbucket.org:compassuav/dashboard.git
 cd dashboard
 gem install bundler
 bundle install
+RAILS_ENV=production rake db:create db:schema:load
 RAILS_ENV=production rake unicorn:start
 EOF
 
