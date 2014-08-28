@@ -12,6 +12,7 @@ cd ~/dashboard
 
 RAILS_ENV=production
 PATH=./bin:$PATH
+chruby ruby-2.1.2
 
 echo --- Checking out code
 

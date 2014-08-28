@@ -3,6 +3,7 @@ set -x
 
 RAILS_ENV=test
 PATH=./bin:$PATH
+chruby ruby-2.1.2
 
 echo --- Bundler
 bundle check || bundle install
