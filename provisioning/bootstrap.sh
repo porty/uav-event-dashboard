@@ -77,6 +77,7 @@ Host bitbucket.org
   StrictHostKeyChecking no
 EOF
   chmod 0600 /home/$u/.ssh/config
+  chown -R $u:$u /home/$u
 }
 
 readonly THE_USER=rubby
@@ -222,9 +223,7 @@ RAILS_ENV=production rake unicorn:start
 EOF
 
 chmod +x /home/$THE_USER/bootstrap_dashboard.sh
-
-chown -R $THE_USER /home/$THE_USER
-
+chown $THE_USER /home/$THE_USER/bootstrap_dashboard.sh
 su - $THE_USER /home/$THE_USER/bootstrap_dashboard.sh
 
 /etc/init.d/nginx restart
