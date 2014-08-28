@@ -10,9 +10,9 @@ class EventsController < ApplicationController
 
     events.each do |e|
       event = Event.new
-      event.type = e["type"]
+      event.event_type = e["type"]
       event.timestamp = e["time"].to_datetime.to_i
-      event.data = e["data"].to_s
+      event.data = e["data"].to_json
       event.event_transmission_id = transmission.id
       p event
       event.save!
