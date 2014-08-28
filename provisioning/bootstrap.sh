@@ -32,8 +32,56 @@ apt-get -y upgrade
 # user
 ##############
 
+make_user_ssh_good() {
+  local u="$1"
+
+
+  # id_deploy from my macbook air
+  mkdir -p /home/$u/.ssh && chmod 0700 /home/$u/.ssh
+  cat > /home/$u/.ssh/id_rsa <<EOF
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAtOPMS7r3DJl2NcXdfUMkRnqkUeiMtoSiwNY6+B5empMcBLGF
+v+89MDVWY4TS+lSaoD7OfMKsBJK9Rc16RKmoKutur0Y4LeoNYgn3ZmRWeRP+UxGs
+JQxFgXnUU9tRIrpnQaTunzrc3RWsxJXTM4Ar5Cxxt/cXldSWSj6swIIcOOR7SOlZ
+bLVkrIWksPprYhgMoA/UiUW1sorQo/CJ6m1qiSgewu/cc/cCj0eaU1iO1c/As0LK
+i7bel8awYAK8zY9IRkCvqiD7T+sRqNUFFPdqK9kxYkVDWcsfDiPtudueKoDLgH34
+D/vu442qOIyV/61ncA2D3AIEedL8jubLz2HZBwIDAQABAoIBAFqAYlU9XJ80JH1w
+2ojyT7LnZ1EHrWcf4yHhzS0YXLKviWQbwVQvCQkWlntCGCBgteAYrEylRVUgaYwD
+6vlxfI7EreMJmc/2+u0jGWFkMBNx2luLSvpaMmg+IOo3n1dltYWVVEHcPGZskrzk
+TP/GT69gQSEOggFXlD3fL6U9M4uOhPzLAoIIOgq9vOCnH+xBBfCZA4Tu1rNEjbS+
+npwJLXnRC6DUmKdYnFwcnFxxtlHyn2+0MRbDS1weLb4qy5cZwQdjS6eyAvvRc6K8
+0/02eBgS6U+VQabxdCRu3LjT4Sl+zt8w0TaUYdvoPvXzFEk1ZLsbO87tbCIdt+qN
+B6H6k1ECgYEA5odiWHVxBgZ/iXYVaGEp8H70Uv0KMFXsh72bCvWkW+95R6U627VK
+wT4oi6hZAukTlMAuaYz/JHV0owEpXRzRvGJInN13MOQhiHIJ0fRhmcb2tr+WVBLx
+XAam93jv2brYYZtfVLr7DgWd6BMrPn1vM0UTlSJFEft4rX02f7cYA/8CgYEAyOBZ
+88FZvv5IESvDfVoZlpvFeW2r0avixbdCkVp0zWZkNnhPsGX4R26sRI4MJlQVVI3D
+vqNx71bEXuTIUvkI/0DCM41O2fuTEz3FIKuIGge3wOArtlXLGUORGKPmU1l2HWmr
+g2lyVWA+K4uyeboNsD+eneCuGM79YEBUwL8iCvkCgYEArJWeousJeqFSye6FiGd1
+pn7lG1wlTJqHQfhJIqNUMR/PhDvHHMVU+ec3I5cdTHiCGFLobE0Klpj4gTBVb0gs
+HQTXp9iFayzfje8SOwTiLOYvvhEg0kB8QZEZXxxDNJYVeL2BWUXCvnSmCyCOt3Hg
+1llYl8XYP+YsKnYbXvIMILECgYEAqTCFsxAUZhDIZGYG9qqPyNGUxwy/Xg83Jq6P
+C9wzatkl6Nb2z61jK88km21FAHdrq9bnmscRbLQZG4/4xiHpGQzTRRZs5p7FJryt
+LzIqpToA5Bwr1Rx3vuSw7h8GHQfJu0ZIZpvG5+/zDTxRa8NwShWbpIAcQtr8gDhO
+6jVSGAkCgYAdx/hVj4suK3TCOV33cIKgwH2h+uDVRgECS12/+ZEvMiknG/la8Itw
+E09ePZzscWjJJRrbbNjw43HXZjk9oJS93/XI5CQIvm5Alizqk5lB2XmnnimGFQpK
+iOJU7XgVKhjykVYKFLHBx6qa4dfG4FJBz0bluULmiVqiNtF+b21zlA==
+-----END RSA PRIVATE KEY-----
+EOF
+
+  chmod 0600 /home/$u/.ssh/id_rsa
+
+  cat > /home/$u/.ssh/config <<EOF
+Host github.com
+  StrictHostKeyChecking no
+Host bitbucket.org
+  StrictHostKeyChecking no
+EOF
+  chmod 0600 /home/$u/.ssh/config
+}
+
 readonly THE_USER=rubby
 useradd -m -s /bin/bash $THE_USER
+make_user_ssh_good $THE_USER
 
 useradd -m -s /bin/bash buildbox
 
@@ -41,8 +89,8 @@ cat >> /etc/sudoers <<EOF
 
 # Buildbox can do things as rubby
 buildbox ALL = (rubby) NOPASSWD: ALL
-
 EOF
+make_user_ssh_good buildbox
 
 ##############
 # buildbox
@@ -158,48 +206,6 @@ apt-get install -y mysql-server mysql-client
 ##############
 # dashboard
 ##############
-
-# id_deploy from my macbook air
-mkdir -p /home/$THE_USER/.ssh && chmod 0700 /home/$THE_USER/.ssh
-cat > /home/$THE_USER/.ssh/id_rsa <<EOF
------BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAtOPMS7r3DJl2NcXdfUMkRnqkUeiMtoSiwNY6+B5empMcBLGF
-v+89MDVWY4TS+lSaoD7OfMKsBJK9Rc16RKmoKutur0Y4LeoNYgn3ZmRWeRP+UxGs
-JQxFgXnUU9tRIrpnQaTunzrc3RWsxJXTM4Ar5Cxxt/cXldSWSj6swIIcOOR7SOlZ
-bLVkrIWksPprYhgMoA/UiUW1sorQo/CJ6m1qiSgewu/cc/cCj0eaU1iO1c/As0LK
-i7bel8awYAK8zY9IRkCvqiD7T+sRqNUFFPdqK9kxYkVDWcsfDiPtudueKoDLgH34
-D/vu442qOIyV/61ncA2D3AIEedL8jubLz2HZBwIDAQABAoIBAFqAYlU9XJ80JH1w
-2ojyT7LnZ1EHrWcf4yHhzS0YXLKviWQbwVQvCQkWlntCGCBgteAYrEylRVUgaYwD
-6vlxfI7EreMJmc/2+u0jGWFkMBNx2luLSvpaMmg+IOo3n1dltYWVVEHcPGZskrzk
-TP/GT69gQSEOggFXlD3fL6U9M4uOhPzLAoIIOgq9vOCnH+xBBfCZA4Tu1rNEjbS+
-npwJLXnRC6DUmKdYnFwcnFxxtlHyn2+0MRbDS1weLb4qy5cZwQdjS6eyAvvRc6K8
-0/02eBgS6U+VQabxdCRu3LjT4Sl+zt8w0TaUYdvoPvXzFEk1ZLsbO87tbCIdt+qN
-B6H6k1ECgYEA5odiWHVxBgZ/iXYVaGEp8H70Uv0KMFXsh72bCvWkW+95R6U627VK
-wT4oi6hZAukTlMAuaYz/JHV0owEpXRzRvGJInN13MOQhiHIJ0fRhmcb2tr+WVBLx
-XAam93jv2brYYZtfVLr7DgWd6BMrPn1vM0UTlSJFEft4rX02f7cYA/8CgYEAyOBZ
-88FZvv5IESvDfVoZlpvFeW2r0avixbdCkVp0zWZkNnhPsGX4R26sRI4MJlQVVI3D
-vqNx71bEXuTIUvkI/0DCM41O2fuTEz3FIKuIGge3wOArtlXLGUORGKPmU1l2HWmr
-g2lyVWA+K4uyeboNsD+eneCuGM79YEBUwL8iCvkCgYEArJWeousJeqFSye6FiGd1
-pn7lG1wlTJqHQfhJIqNUMR/PhDvHHMVU+ec3I5cdTHiCGFLobE0Klpj4gTBVb0gs
-HQTXp9iFayzfje8SOwTiLOYvvhEg0kB8QZEZXxxDNJYVeL2BWUXCvnSmCyCOt3Hg
-1llYl8XYP+YsKnYbXvIMILECgYEAqTCFsxAUZhDIZGYG9qqPyNGUxwy/Xg83Jq6P
-C9wzatkl6Nb2z61jK88km21FAHdrq9bnmscRbLQZG4/4xiHpGQzTRRZs5p7FJryt
-LzIqpToA5Bwr1Rx3vuSw7h8GHQfJu0ZIZpvG5+/zDTxRa8NwShWbpIAcQtr8gDhO
-6jVSGAkCgYAdx/hVj4suK3TCOV33cIKgwH2h+uDVRgECS12/+ZEvMiknG/la8Itw
-E09ePZzscWjJJRrbbNjw43HXZjk9oJS93/XI5CQIvm5Alizqk5lB2XmnnimGFQpK
-iOJU7XgVKhjykVYKFLHBx6qa4dfG4FJBz0bluULmiVqiNtF+b21zlA==
------END RSA PRIVATE KEY-----
-EOF
-
-chmod 0600 /home/$THE_USER/.ssh/id_rsa
-
-cat > /home/$THE_USER/.ssh/config <<EOF
-Host github.com
-  StrictHostKeyChecking no
-Host bitbucket.org
-  StrictHostKeyChecking no
-EOF
-chmod 0600 /home/$THE_USER/.ssh/config
 
 cat > /home/$THE_USER/bootstrap_dashboard.sh <<EOF
 #!/bin/bash
