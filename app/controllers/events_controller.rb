@@ -1,0 +1,24 @@
+class EventsController < ApplicationController
+  protect_from_forgery with: :null_session
+
+  def create
+    events = params["events"]
+
+    transmission = EventTransmission.new
+    transmission.timestamp = params["time"].to_datetime.to_i
+    transmission.save!
+
+    events.each do |e|
+      event = Event.new
+      event.type = e["type"]
+      event.timestamp = e["time"].to_datetime.to_i
+      event.data = e["data"].to_s
+      event.event_transmission_id = transmission.id
+      p event
+      event.save!
+    end
+
+    render json: {}, status_code: 201
+  end
+
+end
