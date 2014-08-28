@@ -94,10 +94,10 @@ server {
 
   location @payments {
     proxy_pass http://dashboard;
-    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Host \$host;
   }
 
-  gzip_types text/plain text/css text/javascript application/x-javascript application/javascript text/html;
+  gzip_types text/plain text/css text/javascript application/x-javascript application/javascript;
 
   location ^~ /assets/ {
     expires +1y;
@@ -107,12 +107,12 @@ server {
     add_header Last-Modified "";
   }
 
-  try_files $uri @payments;
+  try_files \$uri @payments;
 }
 
 EOF
 
-ln -s /etc/nginx/sites-available/compassuav.conf /etc/nginx/sites-enabled/compassuav.conf
+ln -s /etc/nginx/sites-available/dashboard.conf /etc/nginx/sites-enabled/dashboard.conf
 
 
 ##############
