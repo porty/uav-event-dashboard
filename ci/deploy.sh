@@ -3,6 +3,9 @@
 set -e
 set -x
 
+readonly PROGNAME=$(basename $0)
+readonly PROGDIR=$(readlink -m $(dirname $0))
+
 if [ "$(whoami)" != "rubby" ] ; then
 	sudo -u rubby -i "$PROGDIR/$PROGNAME"
 	exit
