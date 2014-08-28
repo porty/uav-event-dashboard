@@ -13,7 +13,7 @@ fi
 
 cd ~/dashboard
 
-RAILS_ENV=production
+export RAILS_ENV=production
 PATH=./bin:$PATH
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-2.1.2
