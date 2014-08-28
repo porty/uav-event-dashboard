@@ -45,7 +45,7 @@ describe EventsController, :type => :controller do
 
       expect(Event.count).to eq(2)
       Event.all[0].tap do |e|
-        expect(e.type).to eq("chat")
+        expect(e.event_type).to eq("chat")
         expect(e.timestamp).to eq(1409224331)
         expect(e.data).to eq('{"Message":"copter","Who":"bob"}')
       end
