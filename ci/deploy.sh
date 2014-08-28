@@ -10,7 +10,8 @@ fi
 
 cd ~/dashboard
 
-export RAILS_ENV=production
+RAILS_ENV=production
+PATH=./bin:$PATH
 
 echo --- Checking out code
 

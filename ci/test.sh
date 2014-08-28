@@ -2,6 +2,7 @@ set -e
 set -x
 
 RAILS_ENV=test
+PATH=./bin:$PATH
 
 echo --- Bundler
 bundle check || bundle install
