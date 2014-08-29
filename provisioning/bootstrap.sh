@@ -126,6 +126,7 @@ RUBY_VERSION=2.1.2
 
 echo "gem: --no-document" > ~/.gemrc
 echo "gem: --no-document" > /home/$THE_USER/.gemrc
+echo "gem: --no-document" > /home/buildbox/.gemrc
 
 apt-get install -y build-essential libffi-dev libgdbm-dev libncurses5-dev libreadline-dev libssl-dev libyaml-dev zlib1g-dev libmysqlclient-dev libxml2-dev libxslt-dev git
 
@@ -152,6 +153,8 @@ echo "chruby ruby-$RUBY_VERSION" >> /home/$THE_USER/.bash_profile
 echo "chruby ruby-$RUBY_VERSION" >> /home/buildbox/.bash_profile
 
 rm -rf chruby-* ruby-install-*
+
+su - buildbox gem install bundler
 
 ##############
 # nginx
