@@ -212,28 +212,35 @@ apt-get install -y mysql-server mysql-client
 # dashboard
 ##############
 
-cat > /home/$THE_USER/bootstrap_dashboard.sh <<EOF
-#!/bin/bash
-
-set -e
-set -x
-
-git clone git@bitbucket.org:compassuav/dashboard.git
-cd dashboard
-gem install bundler
-bundle install
-RAILS_ENV=production rake db:create db:schema:load
-RAILS_ENV=production rake unicorn:start
-EOF
-
 cat > /home/$THE_USER/start_dashboard.sh <<EOF
 #!/bin/bash
 
 set -e
 set -x
 
+export RAILS_ENV=production
+export RACK_ENV=production
+
 cd dashboard
-RAILS_ENV=production rake unicorn:start
+rake unicorn:start
+EOF
+
+cat > /home/$THE_USER/bootstrap_dashboard.sh <<EOF
+#!/bin/bash
+
+set -e
+set -x
+
+export RAILS_ENV=production
+export RACK_ENV=production
+
+git clone git@bitbucket.org:compassuav/dashboard.git
+cd dashboard
+gem install bundler
+bundle install
+rake db:create db:schema:load
+rake assets:precompile
+rake unicorn:start
 EOF
 
 chmod +x /home/$THE_USER/*.sh
