@@ -5,18 +5,12 @@ Nothing to show yet, I have no data
 
 <% else %>
 
-<table>
-	<tr>
-		<td>Files transferred</td>
-		<td><%= @latest_backlog.completed %></td>
-	</tr>
-	<tr>
-		<td>Backlog</td>
-		<td><%= @latest_backlog.waiting %></td>
-	</tr>
-</table>
-
-Latest backlog sample: <%= time_ago_in_words(Time.at(@latest_backlog.event.timestamp)) %> <br>
-Latest transmission from OBC: <%= time_ago_in_words(Time.at(@latest_backlog.event.transmission.timestamp)) %>
+Images waiting to send: <strong><%= @latest_backlog.waiting %></strong><br>
+Images already sent: <strong><%= @latest_backlog.completed %></strong><br>
+Info as of
+	<strong>
+		<%= timestamp_in_words(@latest_backlog.event.timestamp) %>
+	</strong>
+<br>
 
 <% end %>
