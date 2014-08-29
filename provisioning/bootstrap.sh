@@ -226,8 +226,18 @@ RAILS_ENV=production rake db:create db:schema:load
 RAILS_ENV=production rake unicorn:start
 EOF
 
-chmod +x /home/$THE_USER/bootstrap_dashboard.sh
-chown $THE_USER /home/$THE_USER/bootstrap_dashboard.sh
+cat > /home/$THE_USER/start_dashboard.sh <<EOF
+#!/bin/bash
+
+set -e
+set -x
+
+cd dashboard
+RAILS_ENV=production rake unicorn:start
+EOF
+
+chmod +x /home/$THE_USER/*.sh
+chown $THE_USER /home/$THE_USER/*.sh
 su - $THE_USER /home/$THE_USER/bootstrap_dashboard.sh
 
 /etc/init.d/nginx restart
