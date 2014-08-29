@@ -1,14 +1,22 @@
 
+<% if @latest_backlog.nil? %>
+
+Nothing to show yet, I have no data
+
+<% else %>
+
 <table>
 	<tr>
 		<td>Files transferred</td>
-		<td>5</td>
+		<td><%= @latest_backlog.completed %></td>
 	</tr>
 	<tr>
 		<td>Backlog</td>
-		<td>23</td>
+		<td><%= @latest_backlog.waiting %></td>
 	</tr>
 </table>
 
-Data last refreshed: 2 seconds ago.<br>
-Data sample is from 8 seconds ago.
+Latest backlog sample: <%= time_ago_in_words(Time.at(@latest_backlog.event.timestamp)) %> <br>
+Latest transmission from OBC: <%= time_ago_in_words(Time.at(@latest_backlog.event.transmission.timestamp)) %>
+
+<% end %>
