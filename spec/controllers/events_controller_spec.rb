@@ -51,6 +51,34 @@ describe EventsController, :type => :controller do
       end
     end
 
+    context "backlog events" do
+
+      let(:raw_params) do
+        {
+          "time" => "2014-08-28T21:12:16.881976621+10:00",
+          "events" => [ {
+            "type" => "backlog",
+            "time" => "2014-08-28T21:12:11.104988762+10:00",
+            "data" => {
+              "waiting" => 5,
+              "completed" => 7
+            }
+          } ]
+        }
+      end
+
+      it "saves a Backlog model object" do
+        post :create, raw_params
+
+        expect(Events::Backlog.count).to eq(1)
+        Events::Backlog.all[0].tap do |b|
+          expect(b.waiting).to eq(5)
+          expect(b.completed).to eq(7)
+        end
+      end
+
+    end
+
   #   it "should use command/event pattern" do
   #     expect(Contests::AddWhitelistUserEvent).to receive(:new) do |args|
   #         expect(args[:user_id]).to eq(params[:user_id])

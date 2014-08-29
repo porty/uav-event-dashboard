@@ -14,8 +14,15 @@ class EventsController < ApplicationController
       event.timestamp = e["time"].to_datetime.to_i
       event.data = e["data"].to_json
       event.event_transmission_id = transmission.id
-      p event
       event.save!
+      begin
+        event.process!
+      rescue StandardError => e
+       # TODO bugsnag or sentry or something
+       Rails.logger.error('Failed to process event')
+       Rails.logger.error(e.message)
+       Rails.logger.error(e.backtrace)
+      end
     end
 
     render json: {}, status_code: 201
