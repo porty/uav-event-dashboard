@@ -6,8 +6,10 @@ class Event < ActiveRecord::Base
     case event_type
     when Events::Backlog::EVENT_TYPE
       Events::Backlog.new.tap do |b|
-        b.waiting = data_as_hash['waiting']
-        b.completed = data_as_hash['completed']
+        b.waiting_count = data_as_hash['waitCount']
+        b.waiting_size = data_as_hash['waitSize']
+        b.completed_count = data_as_hash['sentCount']
+        b.completed_size = data_as_hash['sentSize']
         b.event_id = id
         b.save!
       end

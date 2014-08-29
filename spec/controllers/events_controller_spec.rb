@@ -55,15 +55,17 @@ describe EventsController, :type => :controller do
 
       let(:raw_params) do
         {
-          "time" => "2014-08-28T21:12:16.881976621+10:00",
-          "events" => [ {
+          "time" => "2014-08-24T23:15:44.274441358+10:00",
+          "events" => [{
             "type" => "backlog",
-            "time" => "2014-08-28T21:12:11.104988762+10:00",
+            "time" => "2014-08-24T23:15:39.273821646+10:00",
             "data" => {
-              "waiting" => 5,
-              "completed" => 7
+              "sentCount" => 1,
+              "sentSize" => 1024,
+              "waitCount"=> 2,
+              "waitSize"=> 2048
             }
-          } ]
+          }]
         }
       end
 
@@ -72,101 +74,13 @@ describe EventsController, :type => :controller do
 
         expect(Events::Backlog.count).to eq(1)
         Events::Backlog.all[0].tap do |b|
-          expect(b.waiting).to eq(5)
-          expect(b.completed).to eq(7)
+          expect(b.completed_count).to eq(1)
+          expect(b.completed_size).to eq(1024)
+          expect(b.waiting_count).to eq(2)
+          expect(b.waiting_size).to eq(2048)
         end
       end
 
     end
-
-  #   it "should use command/event pattern" do
-  #     expect(Contests::AddWhitelistUserEvent).to receive(:new) do |args|
-  #         expect(args[:user_id]).to eq(params[:user_id])
-  #         expect(args[:admin_user_id]).to eq(params[:admin_user_id])
-  #
-  #         double.tap do |d|
-  #           expect(d).to receive(:process)
-  #         end
-  #     end
-  #
-  #     post :add, params
-  #   end
-  #
-  #   context "for new IDs" do
-  #     it "should return 200" do
-  #       post :add, params
-  #       expect(response.status).to eq(200)
-  #     end
-  #
-  #     it "should save whitelist item" do
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(false)
-  #       post :add, params
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(true)
-  #     end
-  #   end
-  #
-  #   context "for existing IDs" do
-  #     it "should return 200" do
-  #       Contests::WhitelistUser.new(id: params[:user_id]).save!
-  #       post :add, params
-  #       expect(response.status).to eq(200)
-  #     end
-  #
-  #     it "should still be whitelisted" do
-  #       Contests::WhitelistUser.new(id: params[:user_id]).save!
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(true)
-  #       post :add, params
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(true)
-  #     end
-  #   end
-  #
-  # end
-  #
-  # describe "#remove" do
-  #
-  #   it "should use command/event pattern" do
-  #     expect(Contests::RemoveWhitelistUserEvent).to receive(:new) do |args|
-  #         expect(args[:user_id]).to eq(params[:user_id])
-  #         expect(args[:admin_user_id]).to eq(params[:admin_user_id])
-  #
-  #         double.tap do |d|
-  #           expect(d).to receive(:process)
-  #         end
-  #     end
-  #
-  #     post :remove, params
-  #   end
-  #
-  #   context "for whitelisted users" do
-  #     it "should return 200" do
-  #       Contests::WhitelistUser.new(id: params[:user_id]).save!
-  #       post :remove, params
-  #       expect(response.status).to eq(200)
-  #     end
-  #
-  #     it "should un-whitelist user" do
-  #       Contests::WhitelistUser.new(id: params[:user_id]).save!
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(true)
-  #
-  #       post :remove, params
-  #
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(false)
-  #     end
-  #   end
-  #
-  #   context "for users that aren't whitelisted" do
-  #
-  #     it "should return 200 anyway" do
-  #       post :remove, params
-  #       expect(response.status).to eq(200)
-  #     end
-  #
-  #     it "shouldn't change whitelisting status" do
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(false)
-  #       post :remove, params
-  #       expect(Contests::WhitelistUser.is_whitelisted? params[:user_id]).to eq(false)
-  #     end
-  #
-  #   end
   end
 end

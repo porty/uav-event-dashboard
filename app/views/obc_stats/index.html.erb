@@ -5,12 +5,24 @@ Nothing to show yet, I have no data
 
 <% else %>
 
-Images waiting to send: <strong><%= @latest_backlog.waiting %></strong><br>
-Images already sent: <strong><%= @latest_backlog.completed %></strong><br>
+Images waiting to send:
+	<strong>
+		<%= @latest_backlog.waiting_count %>
+		(<%= number_to_human_size @latest_backlog.waiting_size %>)
+	</strong>
+<br>
+Images already sent:
+	<strong>
+		<%= @latest_backlog.completed_count %>
+		(<%= number_to_human_size @latest_backlog.completed_size %>)
+	</strong>
+<br>
 Info as of
 	<strong>
 		<%= timestamp_in_words(@latest_backlog.event.timestamp) %>
 	</strong>
 <br>
+
+<!-- Device tyime: x, received x -->
 
 <% end %>
