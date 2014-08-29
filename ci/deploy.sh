@@ -7,9 +7,11 @@ readonly PROGNAME=$(basename $0)
 readonly PROGDIR=$(readlink -m $(dirname $0))
 
 if [ "$(whoami)" != "rubby" ] ; then
-	sudo -u rubby -i "$PROGDIR/$PROGNAME"
+	sudo -u rubby -i "$PROGDIR/$PROGNAME" "$BUILDBOX_COMMIT"
 	exit
 fi
+
+readonly BUILDBOX_COMMIT="$1"
 
 cd ~/dashboard
 
