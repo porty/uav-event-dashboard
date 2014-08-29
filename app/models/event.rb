@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  belongs_to :event_transmission
+  alias_method :transmission, :event_transmission
 
   def process!
     case event_type
