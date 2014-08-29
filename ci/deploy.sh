@@ -36,6 +36,10 @@ echo --- Running DB migrations
 
 rake db:migrate
 
+echo --- Precompiling assets
+
+rake assets:precompile
+
 echo --- Restarting unicorn
 
 bundle exec rake unicorn:restart

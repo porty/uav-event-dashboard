@@ -5,7 +5,7 @@ gem 'rails', '4.1.2'
 # Database for Active Record
 gem 'mysql2'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer',  platforms: :ruby
+gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -42,6 +42,8 @@ gem 'foreigner'
 # Provides JSON encode/decode middleware for Faraday
 # gem "faraday_middleware"
 # gem 'bugsnag'
+
+gem 'uglifier'
 
 group :test do
   # Rspec for all tests except for acceptance testing
