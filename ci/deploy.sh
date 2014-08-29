@@ -34,4 +34,9 @@ rake db:migrate
 
 echo --- Restarting unicorn
 
-bundle exec rake unicorn:restart
+readonly unicorn_pid=$(cat /tmp/unicorn.pid)
+if [ "$unicorn_pid" != "" ] ; then
+	bundle exec rake unicorn:graceful_stop
+	while ps -p $unicorn_pid > /dev/null; do printf . ; sleep 0.2; done;
+fi
+bundle exec rake unicorn:start
