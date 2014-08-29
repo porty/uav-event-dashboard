@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829032420) do
+ActiveRecord::Schema.define(version: 20140829163958) do
 
   create_table "event_transmissions", force: true do |t|
     t.integer  "timestamp",  null: false
@@ -32,11 +32,13 @@ ActiveRecord::Schema.define(version: 20140829032420) do
   add_index "events", ["event_type"], name: "index_events_on_event_type", using: :btree
 
   create_table "events_backlogs", force: true do |t|
-    t.integer  "waiting"
-    t.integer  "completed"
-    t.integer  "event_id",   null: false
+    t.integer  "waiting_count",   null: false
+    t.integer  "completed_count", null: false
+    t.integer  "event_id",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "waiting_size",    null: false
+    t.integer  "completed_size",  null: false
   end
 
   add_index "events_backlogs", ["event_id"], name: "events_backlogs_event_id_fk", using: :btree
