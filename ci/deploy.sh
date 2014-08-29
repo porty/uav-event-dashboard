@@ -16,6 +16,7 @@ readonly BUILDBOX_COMMIT="$1"
 cd ~/dashboard
 
 export RAILS_ENV=production
+export RACK_ENV=production
 PATH=./bin:$PATH
 set +x
 source /usr/local/share/chruby/chruby.sh
