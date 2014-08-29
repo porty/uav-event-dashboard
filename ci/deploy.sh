@@ -17,13 +17,15 @@ cd ~/dashboard
 
 export RAILS_ENV=production
 PATH=./bin:$PATH
+set +x
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-2.1.2
+set -x
 
 echo --- Checking out code
 
 git fetch -q
-git checkout -f "$BUILDBOX_COMMIT"
+git checkout -q -f "$BUILDBOX_COMMIT"
 git submodule update --init
 
 echo --- Bundler
