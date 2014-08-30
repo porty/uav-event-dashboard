@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829163958) do
+ActiveRecord::Schema.define(version: 20140830033415) do
 
   create_table "event_transmissions", force: true do |t|
     t.integer  "timestamp",  null: false
@@ -43,8 +43,21 @@ ActiveRecord::Schema.define(version: 20140829163958) do
 
   add_index "events_backlogs", ["event_id"], name: "events_backlogs_event_id_fk", using: :btree
 
+  create_table "events_transfers", force: true do |t|
+    t.string   "name",       limit: 20, null: false
+    t.integer  "size",                  null: false
+    t.integer  "duration",              null: false
+    t.integer  "event_id",              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events_transfers", ["event_id"], name: "events_transfers_event_id_fk", using: :btree
+
   add_foreign_key "events", "event_transmissions", name: "events_event_transmission_id_fk"
 
   add_foreign_key "events_backlogs", "events", name: "events_backlogs_event_id_fk"
+
+  add_foreign_key "events_transfers", "events", name: "events_transfers_event_id_fk"
 
 end
