@@ -43,4 +43,6 @@ rake assets:precompile
 
 echo --- Restarting unicorn
 
-bundle exec rake unicorn:restart
+bundle exec rake unicorn:stop
+sleep 5
+bundle exec rake unicorn:start
