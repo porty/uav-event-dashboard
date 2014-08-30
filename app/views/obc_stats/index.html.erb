@@ -1,4 +1,6 @@
 
+<h1>Backlog Stats</h1>
+
 <% if @latest_backlog.nil? %>
 
 Nothing to show yet, I have no data
@@ -24,5 +26,23 @@ Info as of
 <br>
 
 <!-- Device tyime: x, received x -->
+
+<% end %>
+
+<h1>Latest Transfer Info</h1>
+
+<% if @latest_transfers.empty? %>
+
+Nothing to show yet, I have no data
+
+<% else %>
+
+<% @latest_transfers.each do |t| %>
+<p>
+File: <strong><%= t.name %></strong><br>
+Size: <strong><%= number_to_human_size(t.size) %></strong><br>
+Speed: <strong><%= speed_in_words(t.size, t.duration) %></strong>
+</p>
+<% end %>
 
 <% end %>

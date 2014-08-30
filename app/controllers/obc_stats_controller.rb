@@ -16,4 +16,11 @@ class ObcStatsController < ApplicationController
     "#{prefix} #{suffix}"
   end
 
+  helper_method :speed_in_words
+  def speed_in_words(bytes, ms)
+    seconds = ms / 1000.0
+    bps = bytes / seconds
+    view_context.number_to_human_size(bps) + "/s"
+  end
+
 end
