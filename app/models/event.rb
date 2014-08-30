@@ -13,6 +13,11 @@ class Event < ActiveRecord::Base
         b.event_id = id
         b.save!
       end
+    when Events::Transfer::EVENT_TYPE
+      Events::Transfer.new(data_as_hash).tap do |t|
+        t.event_id = id
+        t.save!
+      end
     end
   end
 

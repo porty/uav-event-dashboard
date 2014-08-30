@@ -82,5 +82,36 @@ describe EventsController, :type => :controller do
       end
 
     end
+
+    context "xfer events" do
+
+      let(:raw_params) do
+        {
+          "time" => "2014-08-24T23:15:44.274441358+10:00",
+          "events" => [{
+            "type" => "xfer",
+            "time" => "2014-08-24T23:15:39.273821646+10:00",
+            "data" => {
+              "name" => "fred",
+              "size" => 3670016,
+              "duration"=> 10000
+            }
+          }]
+        }
+      end
+
+      it "saves a Transfer model object" do
+        post :create, raw_params
+
+        expect(Events::Transfer.count).to eq(1)
+        Events::Transfer.all[0].tap do |t|
+          expect(t.name).to eq('fred')
+          expect(t.size).to eq(3670016)
+          expect(t.duration).to eq(10000)
+        end
+      end
+
+    end
+
   end
 end
