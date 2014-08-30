@@ -2,6 +2,7 @@ class ObcStatsController < ApplicationController
 
   def index
     @latest_backlog = Events::Backlog.last
+    @latest_transfers = Events::Transfer.limit(5).order(id: :desc)
   end
 
   helper_method :timestamp_in_words
