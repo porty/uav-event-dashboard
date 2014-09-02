@@ -1,0 +1,35 @@
+<h1>Backlog Events</h1>
+<p>Page <%= @page %> of <%= @last_page %></p>
+
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Waiting (count)</th>
+		<th>Waiting (size)</th>
+		<th>Completed (size)</th>
+		<th>Completed (count)</th>
+		<th>Time</th>
+	</tr>
+
+<% if @events.empty? %>
+
+	<tr>
+		<td colspan="6" class="no_results">Nothing to show here</td>
+	</tr>
+
+<% else %>
+<% @events.each do |e| %>
+
+	<tr>
+		<td><%= e.id %></td>
+		<td><%= e.waiting_count %></td>
+		<td><%= number_to_human_size(e.waiting_size) %></td>
+		<td><%= e.completed_count %></td>
+		<td><%= number_to_human_size(e.completed_size) %></td>
+		<td><%= e.created_at %></td>
+	</tr>
+
+<% end %>
+<% end %>
+
+</table>
