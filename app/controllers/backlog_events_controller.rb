@@ -1,6 +1,6 @@
 class BacklogEventsController < ApplicationController
   def index
-    @events = Events::Backlog.order(id: :desc).limit(items_per_page)
+    @events = Events::Backlog.order(id: :desc).limit(items_per_page).offset(offset)
     @page = page
   end
 
@@ -11,6 +11,10 @@ class BacklogEventsController < ApplicationController
 
   def items_per_page
     50
+  end
+
+  def offset
+    (page - 1) * items_per_page + 1
   end
 
   private
