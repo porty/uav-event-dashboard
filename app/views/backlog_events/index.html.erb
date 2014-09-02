@@ -1,6 +1,12 @@
 <h1>Backlog Events</h1>
 <p>Page <%= @page %> of <%= @last_page %></p>
 
+<p>
+	<% (1..last_page).each do |p| %>
+		<a href="?page=<%= p %>"><%= p %></a>
+	<% end %>
+</p>
+
 <table>
 	<tr>
 		<th>ID</th>
