@@ -14,7 +14,7 @@ class BacklogEventsController < ApplicationController
   end
 
   def offset
-    (page - 1) * items_per_page + 1
+    (page - 1) * items_per_page
   end
 
   private

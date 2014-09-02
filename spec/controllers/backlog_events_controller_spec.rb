@@ -52,7 +52,7 @@ describe BacklogEventsController do
       add_backlog_events(40)
       expect(controller).to receive(:page).and_return(2)
       expect(controller).to receive(:items_per_page).and_return(10)
-      expect(controller.offset).to eq(11)
+      expect(controller.offset).to eq(10)
     end
 
   end
