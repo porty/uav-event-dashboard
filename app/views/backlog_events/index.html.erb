@@ -1,8 +1,8 @@
 <h1>Backlog Events</h1>
-<p>Page <%= @page %> of <%= @last_page %></p>
+<p>Page <%= page %> of <%= page_count %></p>
 
 <p>
-	<% (1..last_page).each do |p| %>
+	<% (1..page_count).each do |p| %>
 		<a href="?page=<%= p %>"><%= p %></a>
 	<% end %>
 </p>
@@ -14,28 +14,30 @@
 		<th>Waiting (size)</th>
 		<th>Completed (size)</th>
 		<th>Completed (count)</th>
-		<th>Time</th>
+		<th>Timestamp</th>
+		<th>Event Received</th>
 	</tr>
 
-<% if @events.empty? %>
+<% if events.empty? %>
 
 	<tr>
-		<td colspan="6" class="no_results">Nothing to show here</td>
+		<td colspan="7" class="no_results">Nothing to show here</td>
 	</tr>
 
 <% else %>
-<% @events.each do |e| %>
+	<% events.each do |e| %>
 
-	<tr>
-		<td><%= e.id %></td>
-		<td><%= e.waiting_count %></td>
-		<td><%= number_to_human_size(e.waiting_size) %></td>
-		<td><%= e.completed_count %></td>
-		<td><%= number_to_human_size(e.completed_size) %></td>
-		<td><%= e.created_at %></td>
-	</tr>
+		<tr>
+			<td><%= e.id %></td>
+			<td><%= e.waiting_count %></td>
+			<td><%= number_to_human_size(e.waiting_size) %></td>
+			<td><%= e.completed_count %></td>
+			<td><%= number_to_human_size(e.completed_size) %></td>
+			<td><%= Time.at(e.event.timestamp) %></td>
+			<td><%= e.created_at.getlocal %></td>
+		</tr>
 
-<% end %>
+	<% end %>
 <% end %>
 
 </table>
