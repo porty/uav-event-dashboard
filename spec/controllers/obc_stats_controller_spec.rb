@@ -3,6 +3,10 @@ require 'rails_helper'
 
 describe ObcStatsController do
 
+  before(:each) do
+    request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials('uav', 'joe')
+  end
+
   describe '#index' do
 
     context 'transfers' do
