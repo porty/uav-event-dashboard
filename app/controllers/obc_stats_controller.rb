@@ -1,4 +1,4 @@
-class ObcStatsController < ApplicationController
+class ObcStatsController < BasicAuthController
 
   def index
     @latest_backlog = Events::Backlog.last

@@ -1,4 +1,4 @@
-class PaginatedController < ApplicationController
+class PaginatedController < BasicAuthController
 
   helper_method :page_count
   def page_count
