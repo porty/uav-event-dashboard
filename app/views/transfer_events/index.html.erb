@@ -1,0 +1,43 @@
+<h1>Transfer Events</h1>
+<p>Page <%= page %> of <%= page_count %></p>
+
+<p>
+	<% (1..page_count).each do |p| %>
+		<a href="?page=<%= p %>"><%= p %></a>
+	<% end %>
+</p>
+
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Size</th>
+		<th>Duration</th>
+		<th>Avg Speed</th>
+		<th>Timestamp</th>
+		<th>Event Received</th>
+	</tr>
+
+<% if events.empty? %>
+
+	<tr>
+		<td colspan="7" class="no_results">Nothing to show here</td>
+	</tr>
+
+<% else %>
+	<% events.each do |e| %>
+
+		<tr>
+			<td><%= e.id %></td>
+			<td><%= e.name %></td>
+			<td><%= number_to_human_size(e.size) %></td>
+			<td><%= e.duration / 1000.0 %></td>
+			<td><%= number_to_human_size(e.size / (e.duration.to_f / 1000.0)) %>/s</td>
+			<td><%= Time.at(e.event.timestamp) %></td>
+			<td><%= e.created_at.getlocal %></td>
+		</tr>
+
+	<% end %>
+<% end %>
+
+</table>
