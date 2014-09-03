@@ -29,4 +29,23 @@ class PaginatedController < BasicAuthController
     throw StandardError.new("To implement")
   end
 
+  def date
+    if params["date"].nil?
+      nil
+    else
+      params["date"].to_date
+    end
+  end
+
+  def limit_to_date(query)
+    if date
+      beginning = date.beginning_of_day.to_i
+      ending = date.end_of_day.to_i
+      query.where("events.timestamp" => beginning..ending)
+    else
+      query
+    end
+
+  end
+
 end
