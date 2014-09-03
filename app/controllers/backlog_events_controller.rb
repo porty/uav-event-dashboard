@@ -4,10 +4,10 @@ class BacklogEventsController < PaginatedController
 
   helper_method :events
   def events
-    @events = Events::Backlog.includes(:event).limit(items_per_page).offset(offset)
+    @events = limit_to_date(Events::Backlog.includes(:event)).limit(items_per_page).offset(offset)
   end
 
   def item_count
-    Events::Backlog.count
+    limit_to_date(Events::Backlog.includes(:event)).count
   end
 end
