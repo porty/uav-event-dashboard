@@ -8,6 +8,6 @@ class TransferEventsController < PaginatedController
   end
 
   def item_count
-    limit_to_date(Events::Transfer.joins(:event)).count
+    limit_to_date(Events::Transfer.includes(:event)).count
   end
 end
