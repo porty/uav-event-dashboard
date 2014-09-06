@@ -2,3 +2,10 @@
 body {
 	font-family: sans-serif;
 }
+
+.no_results {
+	text-align: center;
+	font-style: italic;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}

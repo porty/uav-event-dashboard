@@ -21,12 +21,41 @@ class PaginatedController < BasicAuthController
     end
   end
 
+  helper_method :link_str
+  def link_str(page = nil)
+    page ||= self.page
+    if date.nil?
+      "?page=#{page}"
+    else
+      "?page=#{page}&date=#{date.to_s}"
+    end
+  end
+
+  helper_method :date
+  def date
+    if params["date"].nil?
+      nil
+    else
+      params["date"].to_date
+    end
+  end
+
   def offset
     (page - 1) * items_per_page
   end
 
   def item_count
     throw StandardError.new("To implement")
+  end
+
+  def limit_to_date(query)
+    if date
+      beginning = date.beginning_of_day.to_i
+      ending = date.end_of_day.to_i
+      query.where("events.timestamp" => beginning..ending)
+    else
+      query
+    end
   end
 
 end

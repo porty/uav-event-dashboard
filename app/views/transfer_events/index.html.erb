@@ -1,9 +1,15 @@
 <h1>Transfer Events</h1>
+
+<form method="get">
+	<input type="date" name="date" value="<%= date.to_s %>" required>
+	<input type="submit" value="Filter">
+</form>
+
 <p>Page <%= page %> of <%= page_count %></p>
 
 <p>
 	<% (1..page_count).each do |p| %>
-		<a href="?page=<%= p %>"><%= p %></a>
+		<a href="<%= link_str(p) %>"><%= p %></a>
 	<% end %>
 </p>
 
