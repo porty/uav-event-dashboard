@@ -55,7 +55,6 @@ class PaginatedController < BasicAuthController
     else
       query
     end
-
   end
 
 end
