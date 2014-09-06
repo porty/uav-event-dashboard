@@ -31,20 +31,21 @@ class PaginatedController < BasicAuthController
     end
   end
 
-  def offset
-    (page - 1) * items_per_page
-  end
-
-  def item_count
-    throw StandardError.new("To implement")
-  end
-
+  helper_method :date
   def date
     if params["date"].nil?
       nil
     else
       params["date"].to_date
     end
+  end
+
+  def offset
+    (page - 1) * items_per_page
+  end
+
+  def item_count
+    throw StandardError.new("To implement")
   end
 
   def limit_to_date(query)
