@@ -3,7 +3,7 @@
 
 <p>
 	<% (1..page_count).each do |p| %>
-		<a href="?page=<%= p %>"><%= p %></a>
+		<a href="<%= link_str(p) %>"><%= p %></a>
 	<% end %>
 </p>
 

@@ -21,6 +21,16 @@ class PaginatedController < BasicAuthController
     end
   end
 
+  helper_method :link_str
+  def link_str(page = nil)
+    page ||= self.page
+    if date.nil?
+      "?page=#{page}"
+    else
+      "?page=#{page}&date=#{date.to_s}"
+    end
+  end
+
   def offset
     (page - 1) * items_per_page
   end
